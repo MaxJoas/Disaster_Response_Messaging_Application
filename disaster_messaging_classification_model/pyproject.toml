@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "disaster_message_classification_model"
+version = "1.0.2"
+description = "End to end lightGBM classification model to predict disaster message genres"
+authors = ["Bowen"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+numpy = "*"
+pandas = "*"
+matplotlib = "*"
+seaborn = "*"
+sklearn = "*"
+lightgbm = "*"
+poetry-version = "*"
+sqlalchemy = "*"
+nltk = "*"
+
+[tool.poetry.dev-dependencies]
+black = "*"
+pytest = "*"
+nb-black = "*"
+dephell = "*"
+
+[tool.dephell.main]
+from = {format = "poetry", path = "pyproject.toml"}
+to = {format = "setuppy", path = "setup.py"}
