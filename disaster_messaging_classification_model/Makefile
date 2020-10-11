@@ -29,7 +29,7 @@ process-data:
 	PYTHONPATH=.. python ../disaster_messaging_classification_model/utils/data_utils.py
 
 # train model
-train:
+train-model:
 	PYTHONPATH=.. python ../disaster_messaging_classification_model/models/train_model.py
 
 ## test price prediction model

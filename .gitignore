@@ -4,3 +4,5 @@
 trained_models/
 data/
 .pytest_cache
+*dist
+*.egg-info
