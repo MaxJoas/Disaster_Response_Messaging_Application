@@ -30,6 +30,9 @@ jobs:
           name: Run model test
           command: make test-model
       - run:
+          name: create setup.py
+          command: make build-setup
+      - run:
           name: init .pypirc
           command: |
             echo -e "[pypi]" >> ~/.pypirc
