@@ -1,4 +1,4 @@
-# Disaster Response Pipeline Project
+# Continuously Integrated Disaster Response Application
 
 ### Project Description:
 
