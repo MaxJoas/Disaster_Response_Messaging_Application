@@ -38,7 +38,7 @@ test-model:
 	PYTHONPATH=. python -m pytest -v tests 
 
 package:
-	pip install twine
+	pip install --user twine
 	python setup.py sdist
 	twine upload --skip-existing dist/*
 
