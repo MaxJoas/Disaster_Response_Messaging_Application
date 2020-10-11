@@ -20,7 +20,7 @@ DATA_CAT_FILE_NAME = "disaster_categories.csv"
 DATABASE_NAME = "DisasterResponse.db"
 TABLE_NAME = "disaster_messages"
 
-EXTRA_FEATURES_DROP_Y = ["id", "message", "original", "genre"]
+EXTRA_FEATURES_DROP_Y = ["id", "message", "original", "genre", "set_label"]
 MESSAGE_FEATURE = "message"
 
 PARAMS = {"n_estimators": 150}
@@ -30,4 +30,45 @@ CV_FOLDS = 5
 N_JOBS = 10
 
 N_ESTIMATORS = 100
+
+TRAINING_DATA_PCT = 0.85
+
+CLASSES = [
+    "related",
+    "request",
+    "offer",
+    "aid_related",
+    "medical_help",
+    "medical_products",
+    "search_and_rescue",
+    "security",
+    "military",
+    "child_alone",
+    "water",
+    "food",
+    "shelter",
+    "clothing",
+    "money",
+    "missing_people",
+    "refugees",
+    "death",
+    "other_aid",
+    "infrastructure_related",
+    "transport",
+    "buildings",
+    "electricity",
+    "tools",
+    "hospitals",
+    "shops",
+    "aid_centers",
+    "other_infrastructure",
+    "weather_related",
+    "floods",
+    "storm",
+    "fire",
+    "earthquake",
+    "cold",
+    "other_weather",
+    "direct_report",
+]
 

@@ -14,11 +14,12 @@ import os
 _logger = logging.getLogger(__name__)
 
 
-def load_data_from_db(database_filepath):
+def load_data_from_db(set_label="train"):
     """
         Load data from the sqlite database. 
     Args: 
         database_filepath: the path of the database file
+        set_label: indicating whether this data is used for train or test
     Returns: 
         X (DataFrame): messages 
         Y (DataFrame): One-hot encoded categories
@@ -26,8 +27,12 @@ def load_data_from_db(database_filepath):
     """
 
     # load data from database
+    database_filepath = config.DATASET_DIR / config.DATABASE_NAME
     engine = create_engine(f"sqlite:///{database_filepath}")
     df = pd.read_sql_table(config.TABLE_NAME, engine)
+
+    # select appropriate set
+    df = df[df["set_label"] == set_label]
     X = df[config.MESSAGE_FEATURE]
     Y = df.drop(config.EXTRA_FEATURES_DROP_Y, axis=1)
     category_names = Y.columns

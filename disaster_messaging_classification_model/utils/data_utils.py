@@ -1,6 +1,6 @@
 import sys
 import pandas as pd
-import numpy as n
+import numpy as np
 from sqlalchemy import create_engine
 from disaster_messaging_classification_model.config import config
 import logging
@@ -55,6 +55,24 @@ def clean_data(df):
     return df
 
 
+def train_test_split_label(df):
+    """
+        Add a column indicating the datapoint belonging to training/test set
+
+    Args:
+        df: The preprocessed dataframe
+    Returns:
+        df with set_label column added
+    """
+    np.random.seed(config.RANDOM_SEED)
+    df["set_label"] = np.random.choice(
+        ["train", "test"],
+        size=len(df),
+        p=[config.TRAINING_DATA_PCT, 1 - config.TRAINING_DATA_PCT],
+    )
+    return df
+
+
 def save_data(df, database_filename):
     """
         Save processed dataframe into sqlite database
@@ -89,10 +107,13 @@ def process_data():
     _logger.info("Cleaning data...")
     df = clean_data(df)
 
+    _logger.info("Generating train test split label")
+    df = train_test_split_label(df)
+
     _logger.info("Saving data...\n    DATABASE: {}".format(config.DATABASE_NAME))
     save_data(df, config.DATASET_DIR / config.DATABASE_NAME)
 
-    _logger.info("Cleaned data saved to database!")
+    _logger.info("Processed data saved to database!")
 
 
 if __name__ == "__main__":

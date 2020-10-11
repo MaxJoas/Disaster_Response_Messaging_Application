@@ -27,9 +27,13 @@ def make_prediction(*, input_data: t.Union[pd.Series, dict]) -> dict:
 
     data = pd.Series(input_data)
 
-    prediction = model_pipeline.predict(data)
+    prediction_array = model_pipeline.predict(data)
 
-    response = {"predictions": prediction, "version": _version}
+    # convert predictions to a json record response
+    predictions_df = pd.DataFrame(data=prediction_array, columns=config.CLASSES)
+    predictions = predictions_df.to_dict(orient="records")
+
+    response = {"predictions": predictions, "version": _version}
 
     _logger.info(
         f"Making predictions with model version: {_version} "
