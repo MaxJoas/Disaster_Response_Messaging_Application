@@ -74,6 +74,11 @@ def evaluate_model(model, X_test, Y_test, category_names):
     save_file_name = f"{config.MODEL_SAVE_FILE}{_version}_performance.csv"
     save_path = config.TRAINED_MODEL_DIR / config.PERFORMACE_REPORT_DIR / save_file_name
 
+    # create performace report directory if not exist
+    if not os.path.exists(config.TRAINED_MODEL_DIR / config.PERFORMACE_REPORT_DIR):
+        os.makedirs(config.config.TRAINED_MODEL_DIR / config.PERFORMACE_REPORT_DIR)
+
+    # save performance report to csv
     performances.to_csv(save_path)
     _logger.info(
         f"Performance report for {config.MODEL_SAVE_FILE}{_version} saved at {save_path}"

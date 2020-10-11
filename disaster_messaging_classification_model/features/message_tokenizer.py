@@ -12,7 +12,13 @@ class Tokenizer(BaseEstimator, TransformerMixin):
     """
 
     def __init__(self):
-        pass
+        self.set_nltk_resource()
+
+    def set_nltk_resource(self):
+        # download nltk resources
+        nltk.download("punkt")
+        nltk.download("stopwords")
+        nltk.download("wordnet")
 
     @staticmethod
     def tokenize(text):
@@ -27,10 +33,6 @@ class Tokenizer(BaseEstimator, TransformerMixin):
         Returns: 
             cleaned tokens(List)
         """
-        # download nltk resources
-        nltk.download("punkt")
-        nltk.download("stopwords")
-        nltk.download("wordnet")
 
         # Define url pattern
         url_re = "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
