@@ -5,7 +5,7 @@ import pickle
 import logging
 
 # import tokenize_function
-from disaster_messaging_classification_model.models.tokenizer_function import Tokenizer
+from disaster_messaging_classification_model.features.message_tokenizer import Tokenizer
 
 # import sklearn
 from sklearn.pipeline import Pipeline
