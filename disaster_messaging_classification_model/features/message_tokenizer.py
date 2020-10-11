@@ -27,6 +27,7 @@ class Tokenizer(BaseEstimator, TransformerMixin):
         Returns: 
             cleaned tokens(List)
         """
+        nltk.download("punkt")
         # Define url pattern
         url_re = "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
 
