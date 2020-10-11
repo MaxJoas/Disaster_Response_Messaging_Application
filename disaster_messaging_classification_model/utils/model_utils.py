@@ -76,7 +76,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
     # create performace report directory if not exist
     if not os.path.exists(config.TRAINED_MODEL_DIR / config.PERFORMACE_REPORT_DIR):
-        os.makedirs(config.config.TRAINED_MODEL_DIR / config.PERFORMACE_REPORT_DIR)
+        os.makedirs(config.TRAINED_MODEL_DIR / config.PERFORMACE_REPORT_DIR)
 
     # save performance report to csv
     performances.to_csv(save_path)
