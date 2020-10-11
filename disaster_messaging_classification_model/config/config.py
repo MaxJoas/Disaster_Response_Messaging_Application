@@ -23,13 +23,13 @@ TABLE_NAME = "disaster_messages"
 EXTRA_FEATURES_DROP_Y = ["id", "message", "original", "genre", "set_label"]
 MESSAGE_FEATURE = "message"
 
-PARAMS = {"n_estimators": 150}
+N_ESTIMATORS = 50
+PARAMS = {"n_estimators": N_ESTIMATORS}
 RANDOM_SEED = 7
 
 CV_FOLDS = 5
 N_JOBS = 10
 
-N_ESTIMATORS = 100
 
 TRAINING_DATA_PCT = 0.85
 
