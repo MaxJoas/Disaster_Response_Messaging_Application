@@ -18,7 +18,7 @@ from sklearn.externals import joblib
 from disaster_messaging_classification_model.config import config
 
 
-def load_data(database_filepath):
+def load_data():
     """
         Load data from the sqlite database. 
     Args: 
@@ -31,7 +31,7 @@ def load_data(database_filepath):
 
     # load data from database
     engine = create_engine(f"sqlite:///data/{config.DATABASE_NAME}")
-    df = pd.read_sql_table("DisasterResponse", engine)
+    df = pd.read_sql_table(config.TABLE_NAME, engine)
     X = df[config.MESSAGE_FEATURE]
     Y = df.drop(config.EXTRA_FEATURES_DROP_Y, axis=1)
     category_names = Y.columns
