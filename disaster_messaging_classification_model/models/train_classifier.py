@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import pandas as pd
 import numpy as np
 import pickle
@@ -55,25 +55,32 @@ def train_model():
 
     # load and split data
     X, Y, category_names = load_data_from_db(database_filepath)
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+    X_train, X_test, Y_train, Y_test = train_test_split(
+        X, Y, test_size=0.15, random_state=config.RANDOM_SEED
+    )
 
     # build pipeline
     _logger.info("Building model...")
     model = build_model_pipeline()
 
-    # train model
-    _logger.info("Training model...")
-    model.fit(X_train, Y_train)
+    # train model (hack to save time on circleci)
+    if not os.path.exists(f"{model_filepath}{_version}.pkl"):
+        _logger.info("Training model...")
+        model.fit(X_train, Y_train)
+        # save model pipeline
+        _logger.info(f"Saving model...")
+        save_pipeline(pipeline_to_persist=model)
 
-    # evaluate model
-    _logger.info("Evaluating model...")
-    evaluate_model(model, X_test, Y_test, category_names)
+        _logger.info("Trained model saved!")
 
-    # save model pipelin
-    _logger.info(f"Saving model...")
-    save_pipeline(pipeline_to_persist=model)
+        # evaluate model
+        _logger.info("Evaluating model...")
+        evaluate_model(model, X_test, Y_test, category_names)
 
-    _logger.info("Trained model saved!")
+    else:
+        _logger.info(
+            f"Found existing trained model at {model_filepath}{_version}, please refer to the performance report for that model."
+        )
 
 
 if __name__ == "__main__":
