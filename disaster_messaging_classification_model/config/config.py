@@ -8,22 +8,25 @@ pd.options.display.max_columns = 50
 PACKAGE_ROOT = (
     pathlib.Path(disaster_messaging_classification_model.__file__).resolve().parent
 )
-TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_model_files"
+
+MODEL_NAME = "adaboost"
+MODEL_SAVE_FILE = f"{MODEL_NAME}_model_v"
+
+TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_models"
+PERFORMACE_REPORT_DIR = "performance_report"
 DATASET_DIR = PACKAGE_ROOT / "data"
 DATA_FILE_NAME = "disaster_messages.csv"
 DATA_CAT_FILE_NAME = "disaster_categories.csv"
 DATABASE_NAME = "DisasterResponse.db"
-TABLE_NAME = "DisasterResponse"
+TABLE_NAME = "disaster_messages"
 
 EXTRA_FEATURES_DROP_Y = ["id", "message", "original", "genre"]
 MESSAGE_FEATURE = "message"
 
-GRID_CV_PARAMETERS = {
-    "clf__estimator__max_features": ["sqrt", 0.5],
-    "clf__estimator__n_estimators": [50, 100],
-}
+PARAMS = {"n_estimators": 50}
 
 CV_FOLDS = 5
 N_JOBS = 10
 
 N_ESTIMATORS = 100
+

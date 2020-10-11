@@ -2,44 +2,28 @@ import sys
 import pandas as pd
 import numpy as np
 import pickle
-from sqlalchemy import create_engine
+import logging
 
 # import tokenize_function
-from models.tokenizer_function import Tokenizer
+from disaster_messaging_classification_model.models.tokenizer_function import Tokenizer
 
 # import sklearn
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.metrics import precision_score, recall_score, f1_score
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.externals import joblib
+from sklearn.ensemble import AdaBoostClassifier
+
 from disaster_messaging_classification_model.config import config
+from disaster_messaging_classification_model.utils.model_utils import (
+    load_data_from_db,
+    evaluate_model,
+    save_pipeline,
+)
+from disaster_messaging_classification_model import __version__ as _version
 
 
-def load_data():
-    """
-        Load data from the sqlite database. 
-    Args: 
-        database_filepath: the path of the database file
-    Returns: 
-        X (DataFrame): messages 
-        Y (DataFrame): One-hot encoded categories
-        category_names (List)
-    """
-
-    # load data from database
-    engine = create_engine(f"sqlite:///data/{config.DATABASE_NAME}")
-    df = pd.read_sql_table(config.TABLE_NAME, engine)
-    X = df[config.MESSAGE_FEATURE]
-    Y = df.drop(config.EXTRA_FEATURES_DROP_Y, axis=1)
-    category_names = Y.columns
-
-    return X, Y, category_names
-
-
-def build_model():
+def build_model_pipeline():
     """
       build NLP pipeline - count words, tf-idf, multiple output classifier,
       grid search the best parameters
@@ -54,88 +38,43 @@ def build_model():
             ("tokenizer", Tokenizer()),
             ("vec", CountVectorizer()),
             ("tfidf", TfidfTransformer()),
-            (
-                "clf",
-                MultiOutputClassifier(
-                    AdaBoostClassifier(n_estimators=config.N_ESTIMATORS)
-                ),
-            ),
+            ("clf", MultiOutputClassifier(AdaBoostClassifier(**config.PARAMS))),
         ]
     )
-
-    # grid search
-
-    cv = GridSearchCV(
-        estimator=pipeline,
-        param_grid=config.GRID_CV_PARAMETERS,
-        cv=config.CV_FOLDS,
-        n_jobs=config.N_JOBS,
-    )
-
-    return cv
+    return pipeline
 
 
-def evaluate_model(model, X_test, Y_test, category_names):
-    """
-        Evaluate the model performances, in terms of f1-score, precison and recall
-    Args: 
-        model: the model to be evaluated
-        X_test: X_test dataframe
-        Y_test: Y_test dataframe
-        category_names: category names list defined in load data
-    Returns: 
-        perfomances (DataFrame)
-    """
-    # predict on the X_test
-    y_pred = model.predict(X_test)
+def train_model():
 
-    # build classification report on every column
-    performances = []
-    for i in range(len(category_names)):
-        performances.append(
-            [
-                f1_score(Y_test.iloc[:, i].values, y_pred[:, i], average="micro"),
-                precision_score(
-                    Y_test.iloc[:, i].values, y_pred[:, i], average="micro"
-                ),
-                recall_score(Y_test.iloc[:, i].values, y_pred[:, i], average="micro"),
-            ]
-        )
-    # build dataframe
-    performances = pd.DataFrame(
-        performances, columns=["f1 score", "precision", "recall"], index=category_names
-    )
-    return performances
+    _logger = logging.getLogger(__name__)
 
+    database_filepath = config.DATASET_DIR / config.DATABASE_NAME
+    model_filepath = config.TRAINED_MODEL_DIR / config.MODEL_SAVE_FILE
 
-def save_model(model, model_filepath):
-    """
-        Save model to pickle
-    """
-    joblib.dump(model, open(model_filepath, "wb"))
+    _logger.info("Loading data...\n    DATABASE: {}".format(database_filepath))
 
+    # load and split data
+    X, Y, category_names = load_data_from_db(database_filepath)
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
-def main():
-    if len(sys.argv) == 3:
-        database_filepath, model_filepath = sys.argv[1:]
-        print("Loading data...\n    DATABASE: {}".format(database_filepath))
-        X, Y, category_names = load_data(database_filepath)
-        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+    # build pipeline
+    _logger.info("Building model...")
+    model = build_model_pipeline()
 
-        print("Building model...")
-        model = build_model()
+    # train model
+    _logger.info("Training model...")
+    model.fit(X_train, Y_train)
 
-        print("Training model...")
-        model.fit(X_train, Y_train)
+    # evaluate model
+    _logger.info("Evaluating model...")
+    evaluate_model(model, X_test, Y_test, category_names)
 
-        print("Evaluating model...")
-        evaluate_model(model, X_test, Y_test, category_names)
+    # save model pipelin
+    _logger.info(f"Saving model...")
+    save_pipeline(pipeline_to_persist=model)
 
-        print("Saving model...\n    MODEL: {}".format(model_filepath))
-        save_model(model, model_filepath)
-
-        print("Trained model saved!")
+    _logger.info("Trained model saved!")
 
 
 if __name__ == "__main__":
-    main()
+    train_model()

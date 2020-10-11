@@ -8,7 +8,6 @@ import poetry_version
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 logger.addHandler(logging_config.get_console_handler())
-logger.propagate = False
 
 
 __version__ = poetry_version.extract(source_file=__file__)
