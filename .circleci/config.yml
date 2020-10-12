@@ -28,7 +28,7 @@ jobs:
           command: make train-model
       - run:
           name: Run model test
-          command: make test-models
+          command: make test-model
       - run:
           name: init .pypirc
           command: |
