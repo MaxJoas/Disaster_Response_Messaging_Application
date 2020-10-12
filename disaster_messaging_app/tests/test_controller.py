@@ -3,9 +3,9 @@ import json
 import math
 import os
 
-from price_prediction_model import __version__ as _version
-from price_prediction_model.config import config as model_config
-from price_prediction_model.utils.utils import load_dataset
+from disaster_messaging_classification_model import __version__ as _version
+from disaster_messaging_classification_model.config import config as model_config
+from disaster_messaging_classification_model.utils.utils import load_dataset
 
 from api import __version__ as api_version
 

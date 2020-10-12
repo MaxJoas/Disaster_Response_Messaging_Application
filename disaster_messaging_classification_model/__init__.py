@@ -4,7 +4,6 @@ from disaster_messaging_classification_model import (
     model,
     features,
     utils,
-    trained_model,
     visualizations,
 )
 import poetry_version

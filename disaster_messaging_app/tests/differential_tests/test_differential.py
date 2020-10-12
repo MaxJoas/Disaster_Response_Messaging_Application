@@ -1,8 +1,8 @@
 import math
 
-from price_prediction_model.config import config as model_config
-from price_prediction_model.model.predict import make_prediction
-from price_prediction_model.utils.utils import load_dataset
+from disaster_messaging_classification_model.config import config as model_config
+from disaster_messaging_classification_model.model.predict import make_prediction
+from disaster_messaging_classification_model.utils.utils import load_dataset
 import pandas as pd
 import pytest
 

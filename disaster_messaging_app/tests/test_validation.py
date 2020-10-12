@@ -1,7 +1,7 @@
 import json
 
-from price_prediction_model.config import config
-from price_prediction_model.utils.utils import load_dataset
+from disaster_messaging_classification_model.config import config
+from disaster_messaging_classification_model.utils.utils import load_dataset
 
 
 def test_prediction_endpoint_validation_200(flask_test_client):

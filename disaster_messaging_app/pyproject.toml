@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "price_prediction_model_API"
+name = "disaster_messaging_classification_model_API"
 version = "0.0.1"
 description = "Disaster response messaging app"
 authors = ["Bowen"]

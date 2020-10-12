@@ -6,8 +6,8 @@ differential test versioning logic.
 
 import pandas as pd
 
-from price_prediction_model.model.predict import make_prediction
-from price_prediction_model.utils.utils import load_dataset
+from disaster_messaging_classification_model.model.predict import make_prediction
+from disaster_messaging_classification_model.utils.model_utils import load_data_from_db
 
 from api import config
 
@@ -16,10 +16,10 @@ def capture_predictions() -> None:
     """Save the test data predictions to a CSV."""
 
     save_file = "test_data_predictions.csv"
-    test_data = load_dataset(file_name="beijing_house_price_test_data.csv")
+    X_test, y_test, categories = load_data_from_db(set_label="test")
 
     # we take a slice with no input validation issues
-    multiple_test_input = test_data[99:600]
+    multiple_test_input = X_test[99:600]
 
     predictions = make_prediction(input_data=multiple_test_input)
 
