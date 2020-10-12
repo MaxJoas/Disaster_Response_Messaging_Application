@@ -1,11 +1,10 @@
 FROM python:3.7.6
 
 # Create the user that will run the app
-RUN adduser --disabled-password --gecos '' model-api-user
+RUN adduser --disabled-password --gecos '' model-app-user
 
 WORKDIR /app
 
-ARG PIP_EXTRA_INDEX_URL
 ENV FLASK_APP run.py
 
 # Install requirements, including from Gemfury
@@ -16,9 +15,9 @@ RUN pip install poetry
 RUN make poetry-install
 
 RUN chmod +x run.sh
-RUN chown -R model-api-user:model-api-user ./
+RUN chown -R model-app-user:model-app-user ./
 
-USER model-api-user
+USER model-app-user
 
 EXPOSE 5000
 
