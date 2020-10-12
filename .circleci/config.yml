@@ -57,7 +57,7 @@ jobs:
           command: make poetry-install
       - run:
           name: Run API tests with Python 3.7
-          command: make test-api
+          command: make test-app
 
   differential_tests_ml_api:
     docker:
@@ -97,7 +97,7 @@ jobs:
       - run:
           name: Build and Push Image
           command: |
-            make build-ml-api-heroku push-ml-api-heroku
+            make build-app-heroku push-app-heroku
       - run:
           name: Release to Heroku
           command: |
@@ -112,13 +112,21 @@ workflows:
             branches:
               only:
                 - master
-      # - test_and_build_app:
-      #     requires:
-      #       - test_and_publish_model
+      - test_and_build_app:
+          requires:
+            - test_and_publish_model
+          filters:
+            branches:
+              only:
+                - master
       # - differential_tests_ml_api:
       #     requires:
       #       - test_and_publish_model
-      # - build_and_push_to_heroku_docker:
-      #     requires:
-      #       - test_ml_api
-      #       - differential_tests_ml_api
+      - build_and_push_to_heroku_docker:
+          requires:
+            - test_and_build_app
+            # - differential_tests_ml_api
+          filters:
+            branches:
+              only:
+                - master

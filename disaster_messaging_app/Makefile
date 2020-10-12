@@ -22,13 +22,13 @@ poetry-install:
 		&& poetry debug
 
 ## test model api
-test-api:
+test-app:
 	pip install pytest
 	PYTHONPATH=. python -m pytest -v -m "not differential" tests
 
-build-ml-api-heroku:
+build-app-heroku:
 	poetry export -f requirements.txt -o requirements.txt
 	docker build -t registry.heroku.com/$(NAME)/web .
 
-push-ml-api-heroku:
+push-app-heroku:
 	docker push registry.heroku.com/${HEROKU_APP_NAME}/web:latest
