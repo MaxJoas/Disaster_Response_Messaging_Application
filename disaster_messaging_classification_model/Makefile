@@ -25,6 +25,11 @@ build-setup:
 	pip install dephell
 	dephell deps convert
 
+nltk-resources:
+	python -m nltk.downloader punkt 
+	python -m nltk.downloader stopwords
+	python -m nltk.downloader wordnet  
+
 process-data:
 	PYTHONPATH=.. python ../disaster_messaging_classification_model/utils/data_utils.py
 

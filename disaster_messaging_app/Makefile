@@ -26,6 +26,11 @@ test-app:
 	pip install pytest
 	PYTHONPATH=. python -m pytest -v -m "not differential" tests
 
+nltk-resources:
+	python -m nltk.downloader punkt 
+	python -m nltk.downloader stopwords
+	python -m nltk.downloader wordnet  
+
 build-app-heroku:
 	poetry export -f requirements.txt -o requirements.txt
 	docker build -t registry.heroku.com/$(NAME)/web .

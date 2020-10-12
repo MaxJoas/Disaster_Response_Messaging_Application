@@ -13,6 +13,7 @@ ADD . /app
 RUN pip install --upgrade pip
 RUN pip install poetry
 RUN make poetry-install
+RUN make nltk-resources
 
 RUN chmod +x run.sh
 RUN chown -R model-app-user:model-app-user ./
