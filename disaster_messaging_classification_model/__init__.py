@@ -1,12 +1,18 @@
 import logging
 from disaster_messaging_classification_model.config import config, logging_config
-from disaster_messaging_classification_model import utils, models, features
+from disaster_messaging_classification_model import (
+    model,
+    features,
+    utils,
+    trained_model,
+    visualizations,
+)
 import poetry_version
 
 
 # Configure logger for use in package
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
+logger.setLevel(logging.DEBUG)
 logger.addHandler(logging_config.get_console_handler())
 logger.propagate = False
 

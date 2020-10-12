@@ -2,10 +2,40 @@
 
 from wordcloud import WordCloud, STOPWORDS
 import plotly.graph_objs as go
-from disaster_messaging_classification_model.config import Config
+import plotly.io as pio
+from disaster_messaging_classification_model.config import config
+from sqlalchemy import create_engine
+import pandas as pd
+import logging
+
+mpl_logger = logging.getLogger(__name__)
+mpl_logger.setLevel(logging.WARNING)
 
 
-def plotly_wordcloud(text):
+def load_data_from_db_visual(set_label="train"):
+    """
+        Load data from the sqlite database. 
+    Args: 
+        database_filepath: the path of the database file
+        set_label: indicating whether this data is used for train or test
+    Returns: 
+        X (DataFrame): messages 
+        Y (DataFrame): One-hot encoded categories
+        category_names (List)
+    """
+
+    # load data from database
+    database_filepath = config.DATASET_DIR / config.DATABASE_NAME
+    engine = create_engine(f"sqlite:///{database_filepath}")
+    df = pd.read_sql_table(config.TABLE_NAME, engine)
+
+    # select appropriate set
+    df = df[df["set_label"] == set_label]
+
+    return df
+
+
+def plotly_wordcloud(text, title):
 
     wc = WordCloud(
         stopwords=set(STOPWORDS),
@@ -52,11 +82,16 @@ def plotly_wordcloud(text):
         text=word_list,
     )
 
-    graph = go.Layout(
+    layout = go.Layout(
         {
+            "title": title,
             "xaxis": {"showgrid": False, "showticklabels": False, "zeroline": False},
             "yaxis": {"showgrid": False, "showticklabels": False, "zeroline": False},
+            "width": config.PLOT_WIDTH,
+            "height": config.PLOT_HEIGHT,
         }
     )
 
-    return graph
+    fig = go.Figure(data=[trace], layout=layout)
+
+    return fig

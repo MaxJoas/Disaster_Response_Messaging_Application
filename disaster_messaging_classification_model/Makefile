@@ -30,7 +30,7 @@ process-data:
 
 # train model
 train-model:
-	PYTHONPATH=.. python ../disaster_messaging_classification_model/models/train_model.py
+	PYTHONPATH=.. python ../disaster_messaging_classification_model/model/train_model.py
 
 ## test price prediction model
 test-model:

@@ -11,7 +11,7 @@ FORMATTER = logging.Formatter(
 )
 LOG_DIR = PACKAGE_ROOT / "logs"
 LOG_DIR.mkdir(exist_ok=True)
-LOG_FILE = LOG_DIR / "app.log"
+LOG_FILE = LOG_DIR / "disaster_response_app.log"
 UPLOAD_FOLDER = PACKAGE_ROOT / "uploads"
 UPLOAD_FOLDER.mkdir(exist_ok=True)
 
@@ -41,6 +41,15 @@ def get_logger(*, logger_name):
     logger.propagate = False
 
     return logger
+
+
+class Config:
+    DEBUG = False
+    TESTING = False
+    CSRF_ENABLED = True
+    SECRET_KEY = "this-really-needs-to-be-changed"
+    SERVER_PORT = 5000
+    UPLOAD_FOLDER = UPLOAD_FOLDER
 
 
 class ProductionConfig(Config):

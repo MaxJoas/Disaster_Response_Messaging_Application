@@ -2,11 +2,11 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = price_prediction_model_api
-CONDA_ENVIRONMENT = price_prediction_model_api
+PROJECT_NAME = disaster_reponse_app
+CONDA_ENVIRONMENT = disaster_reponse_app
 PYTHON_VERSION = Python interpreter (e.g. 3, 3.5, 2.7)
-NAME=house-pricing-api
-HEROKU_APP_NAME=house-pricing-api
+NAME=disaster-response-app184
+HEROKU_APP_NAME=disaster-response-app184
 COMMIT_ID=$(shell git rev-parse HEAD)  # REMOVED
 
 #################################################################################

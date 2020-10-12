@@ -1,5 +1,5 @@
-from flask import Blueprint, request, jsonify
-from disaster_messaging_classification_model.models.predict import make_prediction
+from flask import Blueprint, request, jsonify, render_template
+from disaster_messaging_classification_model.model.predict import make_prediction
 from disaster_messaging_classification_model import __version__ as _version
 from disaster_messaging_classification_model.visualizations.generate_visuals import (
     VisualsGeneration,
@@ -8,7 +8,8 @@ import os
 from werkzeug.utils import secure_filename
 
 from app.config import get_logger, UPLOAD_FOLDER
-from app.validation import validate_inputs
+
+# from app.validation import validate_inputs
 from app import __version__ as app_version
 import json
 import plotly
@@ -55,6 +56,6 @@ def go():
 
     # This will render the go.html Please see that file.
     return render_template(
-        "go.html", query=query, classification_result=response["predictions"]
+        "go.html", query=query, classification_result=response["predictions"][0]
     )
 

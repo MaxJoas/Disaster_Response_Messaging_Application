@@ -1,7 +1,7 @@
 *.DS_Store
 *.ipynb_checkpoints
 *__pycache__
-trained_models/
+trained_model/
 data/
 .pytest_cache
 *dist

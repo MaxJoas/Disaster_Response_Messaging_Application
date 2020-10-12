@@ -28,10 +28,7 @@ jobs:
           command: make train-model
       - run:
           name: Run model test
-          command: make test-model
-      - run:
-          name: create setup.py
-          command: make build-setup
+          command: make test-models
       - run:
           name: init .pypirc
           command: |

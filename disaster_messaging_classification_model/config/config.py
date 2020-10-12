@@ -12,7 +12,7 @@ PACKAGE_ROOT = (
 MODEL_NAME = "adaboost"
 MODEL_SAVE_FILE = f"{MODEL_NAME}_model_v"
 
-TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_models"
+TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_model"
 PERFORMACE_REPORT_DIR = "performance_report"
 DATASET_DIR = PACKAGE_ROOT / "data"
 DATA_FILE_NAME = "disaster_messages.csv"
@@ -72,5 +72,7 @@ CLASSES = [
     "direct_report",
 ]
 
-MAX_WORDS = 250
-MAX_FONT = 100
+MAX_WORDS = 150
+MAX_FONTS = 80
+PLOT_WIDTH = 1200
+PLOT_HEIGHT = 800

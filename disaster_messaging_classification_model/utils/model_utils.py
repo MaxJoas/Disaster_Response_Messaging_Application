@@ -89,7 +89,7 @@ def save_pipeline(*, pipeline_to_persist) -> None:
     """
     Persist the pipeline.
     Saves the versioned model, and overwrites any previous
-    saved models. This ensures that when the package is
+    saved model. This ensures that when the package is
     published, there is only one trained model that can be
     called, and we know exactly how it was built.
 

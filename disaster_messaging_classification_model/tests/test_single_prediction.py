@@ -1,6 +1,6 @@
 import math
 
-from disaster_messaging_classification_model.models.predict import make_prediction
+from disaster_messaging_classification_model.model.predict import make_prediction
 from disaster_messaging_classification_model.utils.model_utils import load_data_from_db
 
 
