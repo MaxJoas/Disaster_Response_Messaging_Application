@@ -1,0 +1,10 @@
+notebooks/*
+*/env*
+*/venv*
+.circleci*
+d
+*.env
+*.log
+.git
+.gitignore
+*.jpg
