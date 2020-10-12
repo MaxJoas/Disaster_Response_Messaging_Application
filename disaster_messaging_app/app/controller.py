@@ -1,6 +1,9 @@
 from flask import Blueprint, request, jsonify
 from disaster_messaging_classification_model.models.predict import make_prediction
 from disaster_messaging_classification_model import __version__ as _version
+from disaster_messaging_classification_model.visualizations.generate_visuals import (
+    VisualsGeneration,
+)
 import os
 from werkzeug.utils import secure_filename
 
@@ -16,11 +19,16 @@ _logger = get_logger(logger_name=__name__)
 classification_app = Blueprint("classification_app", __name__)
 
 
-@classification_app.route("/", methods=["GET"])
-def default_page():
-    if request.method == "GET":
-        _logger.info("health status OK")
-        return "Your Beijing House Price Predictions Model app is Starting"
+@classification_app.route("/")
+@classification_app.route("/index")
+def index():
+    graphs = VisualsGeneration().generate_plotly_word_cloud_visuals()
+    # encode plotly graphs in JSON
+    ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
+    graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+
+    # render web page with plotly graphs
+    return render_template("master.html", ids=ids, graphJSON=graphJSON)
 
 
 @classification_app.route("/health", methods=["GET"])
