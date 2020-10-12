@@ -72,3 +72,5 @@ CLASSES = [
     "direct_report",
 ]
 
+MAX_WORDS = 250
+MAX_FONT = 100

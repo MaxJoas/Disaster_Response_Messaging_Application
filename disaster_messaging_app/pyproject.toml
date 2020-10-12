@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "price_prediction_model_API"
+version = "0.0.1"
+description = "Disaster response messaging app"
+authors = ["Bowen"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+flask = ">=1.1.1,<1.2.0"
+poetry-version = "*"
+disaster-message-classification-model = "*"
+gunicorn = "*"
+
+[tool.poetry.dev-dependencies]
+black = "*"
+pytest = "*"
+
+[tool.dephell.main]
+from = {format = "poetry", path = "pyproject.toml"}
+to = {format = "setuppy", path = "setup.py"}

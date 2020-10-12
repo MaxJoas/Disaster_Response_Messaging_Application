@@ -30,6 +30,9 @@ jobs:
           name: Run model test
           command: make test-model
       - run:
+          name: create setup.py
+          command: make build-setup
+      - run:
           name: init .pypirc
           command: |
             echo -e "[pypi]" >> ~/.pypirc
@@ -107,7 +110,11 @@ workflows:
   version: 2
   build-app-workflow:
     jobs:
-      - test_and_publish_model
+      - test_and_publish_model:
+          filters:
+            branches:
+              only:
+                - master
       # - test_and_build_app:
       #     requires:
       #       - test_and_publish_model
