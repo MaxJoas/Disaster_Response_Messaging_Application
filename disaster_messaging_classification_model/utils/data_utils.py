@@ -16,7 +16,7 @@ def load_data(messages_filepath):
         merged_df (DataFrame): messages and categories merged dataframe
     """
     # read the csv and skip the first 2 columns
-    df = pd.read_csv(messages_filepath, sep="delimiter", engine="python")
+    df = pd.read_csv(messages_filepath)
     return df
 
 
