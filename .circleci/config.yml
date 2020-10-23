@@ -21,6 +21,9 @@ jobs:
           name: Install poetry packages
           command: make poetry-install
       - run:
+          name: Set script permissions and fetch data
+          command: make fetch-dataset
+      - run:
           name: preprocess the data
           command: make process-data
       - run:
