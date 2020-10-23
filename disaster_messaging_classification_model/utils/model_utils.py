@@ -29,9 +29,6 @@ def load_data_from_db(set_label="train"):
     # load data from database
     database_filepath = config.DATASET_DIR / config.DATABASE_NAME
     engine = create_engine(f"sqlite:///{database_filepath}")
-    import pdb
-
-    pdb.set_trace()
     df = pd.read_sql_table(config.TABLE_NAME, engine)
 
     # select appropriate set
