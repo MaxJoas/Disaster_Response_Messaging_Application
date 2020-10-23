@@ -15,10 +15,12 @@ def test_make_single_prediction():
     # Then
     assert subject is not None
     assert isinstance(subject.get("predictions")[0], dict)
-    assert len(subject.get("predictions")[0]) == 36
+    assert len(subject.get("predictions")[0]) == 37
     assert subject.get("predictions")[0]["related"] == 1
+    assert subject.get("predictions")[0]["weather_related"] == 1
+    assert subject.get("predictions")[0]["storm"] == 1
 
     for i in categories:
-        if i != "related":
+        if i not in ["related", "weather_related", "storm"]:
             assert subject.get("predictions")[0][i] == 0
 

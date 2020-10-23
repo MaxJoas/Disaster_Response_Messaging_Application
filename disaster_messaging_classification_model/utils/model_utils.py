@@ -30,6 +30,9 @@ def load_data_from_db(set_label="train"):
     database_filepath = config.DATASET_DIR / config.DATABASE_NAME
     engine = create_engine(f"sqlite:///{database_filepath}")
     df = pd.read_sql_table(config.TABLE_NAME, engine)
+    # import pdb
+
+    # pdb.set_trace()
 
     # select appropriate set
     df = df[df["set_label"] == set_label]

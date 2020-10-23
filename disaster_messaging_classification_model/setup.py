@@ -14,7 +14,7 @@ readme = ""
 setup(
     long_description=readme,
     name="disaster_message_classification_model",
-    version="1.0.2",
+    version="1.0.3",
     description="End to end lightGBM classification model to predict disaster message genres",
     python_requires="==3.*,>=3.7.0",
     author="Bowen",

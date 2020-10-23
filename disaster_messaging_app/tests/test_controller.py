@@ -64,10 +64,11 @@ def test_prediction_endpoint_returns_prediction(flask_test_client):
     response_version = response_json["version"]
     assert response_json is not None
     assert isinstance(response_json.get("predictions")[0], dict)
-    assert len(response_json.get("predictions")[0]) == 36
+    assert len(response_json.get("predictions")[0]) == 37
     assert response_json.get("predictions")[0]["related"] == 1
+    assert response_json.get("predictions")[0]["weather_related"] == 1
+    assert response_json.get("predictions")[0]["storm"] == 1
 
     for i in categories:
-        if i != "related":
+        if i not in ["related", "weather_related", "storm"]:
             assert response_json.get("predictions")[0][i] == 0
-    assert response_version == _version

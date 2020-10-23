@@ -34,6 +34,7 @@ TRAINING_DATA_PCT = 0.85
 
 CLASSES = [
     "related",
+    "PII",
     "request",
     "offer",
     "aid_related",

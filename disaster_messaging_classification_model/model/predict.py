@@ -26,7 +26,6 @@ def make_prediction(*, input_data: t.Union[pd.Series, dict]) -> dict:
     """
 
     data = pd.Series(input_data)
-
     prediction_array = model_pipeline.predict(data)
 
     # convert predictions to a json record response
