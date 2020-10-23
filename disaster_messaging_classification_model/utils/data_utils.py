@@ -6,7 +6,7 @@ from disaster_messaging_classification_model.config import config
 import logging
 
 
-def load_data(messages_filepath, categories_filepath):
+def load_data(messages_filepath):
     """
         Load data from the csv. 
     Args: 
@@ -15,43 +15,8 @@ def load_data(messages_filepath, categories_filepath):
     Returns: 
         merged_df (DataFrame): messages and categories merged dataframe
     """
-
-    messages = pd.read_csv(messages_filepath)
-    categories = pd.read_csv(categories_filepath)
-    # merge two dataframes into one
-    df = pd.merge(messages, categories, on="id")
-    return df
-
-
-def clean_data(df):
-    """
-        Clean the unstructured merged dataframe into structured dataframes. 
-        1. Rename columns of different categories
-        2. Remove Duplicates
-
-    Args: 
-        df: The preprocessed dataframe
-    Returns: 
-        df (DataFrame): messages and categories merged dataframe
-    """
-
-    # split the categories columns into multiple columns
-    categories = df["categories"].str.split(";", expand=True)
-
-    # rename columns
-    row = categories.iloc[1]
-    category_colnames = row.apply(lambda x: x.split("-")[0])
-    categories.columns = category_colnames
-
-    # replace original values into 1 and 0
-    for column in categories:
-        categories[column] = categories[column].apply(lambda x: int(x.split("-")[1]))
-
-    # replace the old categories column
-    df.drop("categories", axis=1, inplace=True)
-    df = df.join(categories)
-    # drop duplicates
-    df = df.drop_duplicates()
+    # read the csv and skip the first 2 columns
+    df = pd.read_csv(messages_filepath, sep="delimiter", engine="python")
     return df
 
 
@@ -95,17 +60,9 @@ def process_data():
 
     # load messages and categories
     messages_filepath = config.DATASET_DIR / config.DATA_FILE_NAME
-    categories_filepath = config.DATASET_DIR / config.DATA_CAT_FILE_NAME
 
-    _logger.info(
-        "Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}".format(
-            messages_filepath, categories_filepath
-        )
-    )
-    df = load_data(messages_filepath, categories_filepath)
-
-    _logger.info("Cleaning data...")
-    df = clean_data(df)
+    _logger.info("Loading data...\n    MESSAGES: {}\n   ".format(messages_filepath))
+    df = load_data(messages_filepath)
 
     _logger.info("Generating train test split label")
     df = train_test_split_label(df)

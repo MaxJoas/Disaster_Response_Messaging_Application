@@ -15,12 +15,11 @@ MODEL_SAVE_FILE = f"{MODEL_NAME}_model_v"
 TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_model"
 PERFORMACE_REPORT_DIR = "performance_report"
 DATASET_DIR = PACKAGE_ROOT / "data"
-DATA_FILE_NAME = "disaster_messages.csv"
-DATA_CAT_FILE_NAME = "disaster_categories.csv"
+DATA_FILE_NAME = "disaster_response_messages.csv"
 DATABASE_NAME = "DisasterResponse.db"
 TABLE_NAME = "disaster_messages"
 
-EXTRA_FEATURES_DROP_Y = ["id", "message", "original", "genre", "set_label"]
+EXTRA_FEATURES_DROP_Y = ["id", "message", "split", "original", "genre", "set_label"]
 MESSAGE_FEATURE = "message"
 
 N_ESTIMATORS = 50

@@ -49,6 +49,7 @@ setup(
         "sklearn",
         "sqlalchemy",
         "wordcloud",
+        "kaggle",
     ],
     extras_require={"dev": ["black==20.8b1", "dephell", "pytest"]},
 )

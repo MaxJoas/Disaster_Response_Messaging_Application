@@ -21,6 +21,10 @@ poetry-install:
 		|  pip install -r /dev/stdin \
 		&& poetry debug
 
+fetch-dataset:
+	chmod +x ./scripts/fetch_kaggle_dataset.sh
+	./scripts/fetch_kaggle_dataset.sh
+
 build-setup:
 	pip install dephell
 	dephell deps convert
