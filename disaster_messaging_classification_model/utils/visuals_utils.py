@@ -36,7 +36,7 @@ def load_data_from_db_visual(set_label="train"):
 
 
 def plotly_wordcloud(text, title):
-
+    # create wordcloud object
     wc = WordCloud(
         stopwords=set(STOPWORDS),
         max_words=config.MAX_WORDS,
@@ -72,6 +72,7 @@ def plotly_wordcloud(text, title):
         new_freq_list.append(i * 100)
     new_freq_list
 
+    # create scatter data trace
     trace = go.Scatter(
         x=x,
         y=y,
@@ -81,7 +82,7 @@ def plotly_wordcloud(text, title):
         mode="text",
         text=word_list,
     )
-
+    # create layout
     layout = go.Layout(
         {
             "title": title,
@@ -91,7 +92,7 @@ def plotly_wordcloud(text, title):
             "height": config.PLOT_HEIGHT,
         }
     )
-
+    # create figure with the trace and layout defined above
     fig = go.Figure(data=[trace], layout=layout)
 
     return fig

@@ -65,27 +65,6 @@ jobs:
           name: Run API tests with Python 3.7
           command: make test-app
 
-  differential_tests_ml_api:
-    docker:
-      - image: circleci/python:3.7.6
-    working_directory: ~/project/disaster_messaging_app
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: Install pip
-          command: pip install --upgrade pip
-      - run:
-          name: Capturing previous model predictions
-          command: |
-            pip install -r diff_test_requirements.txt
-            PYTHONPATH=. python3 tests/capture_model_predictions.py
-      - run:
-          name: Running differential tests
-          command: |
-            make poetry-install
-            py.test -vv tests -m differential
-
   build_and_push_to_heroku_docker:
     docker:
       - image: circleci/python:3.7.6
@@ -125,13 +104,9 @@ workflows:
             branches:
               only:
                 - master
-      # - differential_tests_ml_api:
-      #     requires:
-      #       - test_and_publish_model
       - build_and_push_to_heroku_docker:
           requires:
             - test_and_build_app
-            # - differential_tests_ml_api
           filters:
             branches:
               only:

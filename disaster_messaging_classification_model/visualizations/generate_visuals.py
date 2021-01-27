@@ -22,6 +22,7 @@ class VisualsGeneration:
         social_media_messages = social_media_messages.translate(
             str.maketrans("", "", string.punctuation)
         )
+        # create layout using plotly_wordcloud
         social_media_layout = plotly_wordcloud(
             social_media_messages, title="What People Are Saying On Social Media"
         )
@@ -31,6 +32,7 @@ class VisualsGeneration:
         news_messages = news_messages.translate(
             str.maketrans("", "", string.punctuation)
         )
+        # create layout using plotly_wordcloud
         news_layout = plotly_wordcloud(
             news_messages, title="What People Are Saying In News"
         )
@@ -40,6 +42,7 @@ class VisualsGeneration:
         direct_messages = direct_messages.translate(
             str.maketrans("", "", string.punctuation)
         )
+        # create layout using plotly_wordcloud
         direct_layout = plotly_wordcloud(
             direct_messages, title="What People Are Saying In Direct Messages"
         )
